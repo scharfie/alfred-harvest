@@ -3,12 +3,24 @@
   $query = trim($argv[1]);
   $dir = "../../../Workflow Data/com.neilrenicker.harvest/";
 
+  function decimal_to_hours($decimal) {
+    $parts = explode('.', $decimal . '');
+    $parts[] = 0;
+
+    $minutes = sprintf("%02d", $parts[1] / 100 * 60);
+    $hours   = $parts[0];
+
+    return "$hours:$minutes"; # ($decimal)";
+  }
+
   if ( !$query ) {
 
     require('get_daily.php');
 
     $data = json_decode($response, true);
     $xml = "<?xml version=\"1.0\"?>\n<items>\n";
+
+    $total_hours = 0;
 
     if ($data["day_entries"]) {
       foreach ($data["day_entries"] as $day_entry) {
@@ -19,6 +31,10 @@
         $hours   = $day_entry["hours"];
         $active  = $day_entry["timer_started_at"];
         $id      = $day_entry["id"];
+
+        $total_hours += (float)$hours;
+
+        $hours   = decimal_to_hours($hours);
 
         if ( $active ) {
           $xml .= "<item uid=\"harvesttoggle-current\" arg=\"$id\">\n";
@@ -41,6 +57,9 @@
 
         $xml .= "</item>\n";
       }
+
+      $total_hours = decimal_to_hours($total_hours);
+      $xml .= "<item><title>$total_hours hours today</title></item>";
       
     } else {
       $xml .= "<item>\n";
