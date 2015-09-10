@@ -1,7 +1,20 @@
 <?php
+  require('commands/auth.php');
 
   $query = trim($argv[1]);
   $dir = "../../../Workflow Data/com.neilrenicker.harvest/";
+
+  function decimal_to_hours($decimal) {
+    $parts = explode('.', $decimal . '');
+    $parts[] = 0;
+
+    $decimal = substr($parts[1] . '00', 0, 2);
+
+    $minutes = sprintf("%02d", $decimal / 100 * 60);
+    $hours   = $parts[0];
+
+    return "$hours:$minutes"; # ($decimal)";
+  }
 
   if ( !$query ) {
 
@@ -9,6 +22,8 @@
 
     $data = json_decode($response, true);
     $xml = "<?xml version=\"1.0\"?>\n<items>\n";
+
+    $total_hours = 0;
 
     if ($data["day_entries"]) {
       foreach ($data["day_entries"] as $day_entry) {
@@ -19,6 +34,10 @@
         $hours   = $day_entry["hours"];
         $active  = $day_entry["timer_started_at"];
         $id      = $day_entry["id"];
+
+        $total_hours += (float)$hours;
+
+        $hours   = decimal_to_hours($hours);
 
         if ( $active ) {
           $xml .= "<item uid=\"harvesttoggle-current\" arg=\"$id\">\n";
@@ -41,6 +60,16 @@
 
         $xml .= "</item>\n";
       }
+
+      $xml .= "<item>\n";
+      $xml .= "<title>Add new timer</title>\n";
+      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
+      $xml .= "<icon>icons/add.png</icon>\n";
+      $xml .= "</item>\n";
+
+      $d = $total_hours;
+      $total_hours = decimal_to_hours($total_hours);
+      $xml .= "<item><title>$total_hours ($d) hours today</title></item>";
       
     } else {
       $xml .= "<item>\n";
@@ -95,6 +124,13 @@
           $xml .= "</item>\n";
         }
       }
+
+      $xml .= "<item>\n";
+      $xml .= "<title>Add new timer</title>\n";
+      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
+      $xml .= "<icon>icons/add.png</icon>\n";
+      $xml .= "</item>\n";
+
     } else {
       $xml .= "<item>\n";
       $xml .= "<title>No timers yet today. Start one?</title>\n";
@@ -102,6 +138,7 @@
       $xml .= "<icon>icons/add.png</icon>\n";
       $xml .= "</item>\n";
     }
+
     
     $xml .= "</items>";
     echo $xml;
