@@ -7,6 +7,7 @@
 
   $strings = explode( "\n", $data);
   $subdomain = $strings[0];
+  $url = "https://$subdomain.harvestapp.com/daily";
   $email = $strings[1];
 
   // Migrate to using the keychain

@@ -1,7 +1,5 @@
-  <?php
+<?php
   require('auth.php');
-  $url = "https://$subdomain.harvestapp.com/daily";
-  $dir = "../../../Workflow Data/com.neilrenicker.harvest/";
 
   $headers = array (
     "Content-type: application/json",

@@ -220,6 +220,14 @@
 				<integer>0</integer>
 				<key>keyword</key>
 				<string>hv new</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Finding your projects...</string>
 				<key>script</key>
@@ -243,6 +251,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -260,6 +270,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -277,6 +289,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -319,6 +333,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -342,6 +358,14 @@
 				<integer>0</integer>
 				<key>keyword</key>
 				<string>hv toggle</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Finding today's tasks...</string>
 				<key>script</key>
@@ -365,6 +389,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -408,6 +434,8 @@ end if</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -425,6 +453,8 @@ end if</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -473,6 +503,14 @@ end if</string>
 				<integer>0</integer>
 				<key>keyword</key>
 				<string>hv note</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Finding today's tasks...</string>
 				<key>script</key>
@@ -496,6 +534,8 @@ end if</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -516,6 +556,8 @@ end if</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -536,27 +578,25 @@ end if</string>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
-				<integer>127</integer>
+				<integer>0</integer>
 				<key>keyword</key>
 				<string>hv launch</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>script</key>
-				<string>require('commands/auth.php');
-$url = "https://$subdomain.harvestapp.com";
-
-$xml = "&lt;?xml version=\"1.0\"?&gt;\n&lt;items&gt;\n";
-$xml .= "&lt;item uid=\"harvestaccount\" arg=\"$url\"&gt;\n";
-$xml .= "&lt;title&gt;Launch Harvest account...&lt;/title&gt;\n";
-$xml .= "&lt;subtitle&gt;Visit $url&lt;/subtitle&gt;\n";
-$xml .= "&lt;icon&gt;icon.png&lt;/icon&gt;\n";
-$xml .= "&lt;/item&gt;\n";
-$xml .= "&lt;/items&gt;";
-echo $xml;</string>
+				<string>php -f commands/launch.php</string>
 				<key>subtext</key>
 				<string>Launch Harvest account in a browser</string>
 				<key>title</key>
 				<string>Launch: Visit Harvest account</string>
 				<key>type</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -576,6 +616,14 @@ echo $xml;</string>
 				<integer>0</integer>
 				<key>keyword</key>
 				<string>hv setup</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>script</key>
 				<string>$in = "{query}";
 $dir = "../../../Workflow Data/com.neilrenicker.harvest/";
@@ -634,6 +682,8 @@ echo $xml;</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
@@ -696,6 +746,8 @@ endif;</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
