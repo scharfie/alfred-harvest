@@ -392,11 +392,12 @@
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>127</integer>
+				<integer>126</integer>
 				<key>script</key>
 				<string>set temp to "{query}"
-if temp is "" then
-	tell application "Alfred 2" to search "hv new "
+if temp starts with "new:" then
+    set temp to (characters 5 thru -1 of temp as string)
+	tell application "Alfred 2" to search "hv new " &amp; temp
 end if</string>
 				<key>type</key>
 				<integer>6</integer>

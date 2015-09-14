@@ -2,7 +2,7 @@
 
   $query = trim($argv[1]);
 
-  if ($query) {
+  if ($query && stripos($query, 'new:') === false) {
     require('auth.php');
     $url = "https://$subdomain.harvestapp.com/daily/timer/$query";
 
