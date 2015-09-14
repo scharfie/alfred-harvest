@@ -2,13 +2,14 @@
   require('functions.php');
   require('auth.php');
 
+  $xml = "<?xml version=\"1.0\"?>\n<items>\n";
+
   $query = trim($argv[1]);
 
   if ( !$query ) {
     require('get_daily.php');
 
     $data = json_decode($response, true);
-    $xml = "<?xml version=\"1.0\"?>\n<items>\n";
 
     $total_hours = 0;
 
@@ -48,26 +49,23 @@
         $xml .= "</item>\n";
       }
 
-      $xml .= "<item>\n";
-      $xml .= "<title>Add new timer</title>\n";
-      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
-      $xml .= "<icon>icons/add.png</icon>\n";
-      $xml .= "</item>\n";
+      /* $xml .= "<item>\n"; */
+      /* $xml .= "<title>Add new timer</title>\n"; */
+      /* $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n"; */
+      /* $xml .= "<icon>icons/add.png</icon>\n"; */
+      /* $xml .= "</item>\n"; */
 
       $d = $total_hours;
       $total_hours = decimal_to_hours($total_hours);
       $xml .= "<item><title>$total_hours ($d) hours today</title></item>";
       
-    } else {
-      $xml .= "<item>\n";
-      $xml .= "<title>No timers yet today. Start one?</title>\n";
-      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
-      $xml .= "<icon>icons/add.png</icon>\n";
-      $xml .= "</item>\n";
+    /* } else { */
+    /*   $xml .= "<item>\n"; */
+    /*   $xml .= "<title>No timers yet today. Start one?</title>\n"; */
+    /*   $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n"; */
+    /*   $xml .= "<icon>icons/add.png</icon>\n"; */
+    /*   $xml .= "</item>\n"; */
     }
-
-    $xml .= "</items>";
-    echo $xml;
 
   } else {
 
@@ -112,23 +110,44 @@
         }
       }
 
-      $xml .= "<item arg=\"new:$query\">\n";
-      $xml .= "<title>Add new timer</title>\n";
-      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
+      /* $xml .= "<item arg=\"new:$query\">\n"; */
+      /* $xml .= "<title>Add new timer</title>\n"; */
+      /* $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n"; */
+      /* $xml .= "<icon>icons/add.png</icon>\n"; */
+      /* $xml .= "</item>\n"; */
+
+    /* } else { */
+    /*   $xml .= "<item arg=\"new:$query\">\n"; */
+    /*   $xml .= "<title>No timers yet today. Start one?</title>\n"; */
+    /*   $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n"; */
+    /*   $xml .= "<icon>icons/add.png</icon>\n"; */
+    /*   $xml .= "</item>\n"; */
+    }
+  }
+
+  // add in 'new items' that match query
+
+  foreach ($data["projects"] as $project){
+    $name    = htmlspecialchars($project["name"]);
+    $client  = htmlspecialchars($project["client"]);
+    $id      = $project["id"];
+
+    if ( !$query ) {
+      $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
+      $xml .= "<title>$name, $client</title>\n";
+      $xml .= "<subtitle>View available tasks...</subtitle>\n";
       $xml .= "<icon>icons/add.png</icon>\n";
       $xml .= "</item>\n";
-
-    } else {
-      $xml .= "<item arg=\"new:$query\">\n";
-      $xml .= "<title>No timers yet today. Start one?</title>\n";
-      $xml .= "<subtitle>Press 'Enter' to select a new timer...</subtitle>\n";
+    } elseif ( stripos($name . $client, $query) !== false ) {
+      $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
+      $xml .= "<title>$name, $client</title>\n";
+      $xml .= "<subtitle>View available tasks...</subtitle>\n";
       $xml .= "<icon>icons/add.png</icon>\n";
       $xml .= "</item>\n";
     }
-
-    
-    $xml .= "</items>";
-    echo $xml;
   }
 
+  // /end
+  $xml .= "</items>";
+  echo $xml;
 ?>
