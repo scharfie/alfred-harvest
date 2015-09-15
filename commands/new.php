@@ -21,13 +21,13 @@
       $id      = $project["id"];
 
       if ( !$query ) {
-        $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
+        $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" arg=\"new:$name →\" autocomplete=\" $name → \">\n";
         $xml .= "<title>$name, $client</title>\n";
         $xml .= "<subtitle>View available tasks...</subtitle>\n";
         $xml .= "<icon>icons/add.png</icon>\n";
         $xml .= "</item>\n";
       } elseif ( stripos($name . $client, $query) !== false ) {
-        $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
+        $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\" $name → \">\n";
         $xml .= "<title>$name, $client</title>\n";
         $xml .= "<subtitle>View available tasks...</subtitle>\n";
         $xml .= "<icon>icons/add.png</icon>\n";

@@ -2,9 +2,14 @@
   require('functions.php');
   require('auth.php');
 
-  $xml = "<?xml version=\"1.0\"?>\n<items>\n";
-
   $query = trim($argv[1]);
+  
+  if ( substr_count( $query, '→' ) == 1 ) {
+    require('new.php');
+    return;
+  }
+
+  $xml = "<?xml version=\"1.0\"?>\n<items>\n";
 
   if ( !$query ) {
     require('get_daily.php');

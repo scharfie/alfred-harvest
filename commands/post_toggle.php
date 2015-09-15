@@ -1,6 +1,12 @@
 <?php
+  require('functions.php');
 
   $query = trim($argv[1]);
+
+  if ( substr_count( $query, '|' ) == 2 ) {
+    echo start_timer($query);
+    return;
+  }
 
   if ($query && stripos($query, 'new:') === false) {
     require('auth.php');
@@ -33,6 +39,17 @@
     }
 
     echo $query;
+
+  } else {
+    $xml = "<?xml version=\"1.0\"?>\n<items>\n";
+    $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
+    $xml .= "<title>HELLO</title>\n";
+    $xml .= "<subtitle>View available tasks...</subtitle>\n";
+    $xml .= "<icon>icons/add.png</icon>\n";
+    $xml .= "</item>\n";
+
+    $xml .= "</items>";
+    echo $xml;
   }
 
 ?>
