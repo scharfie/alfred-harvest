@@ -54,7 +54,6 @@ function start_timer($query) {
   );
 
   debug($xml_data);
-  echo $xml_data;
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
