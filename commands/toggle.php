@@ -77,17 +77,17 @@
     $data_raw = file_get_contents($dir . 'projects.json');
     $data = json_decode($data_raw, true);
 
-    $xml = "<?xml version=\"1.0\"?>\n<items>\n";
+    $xml = '<?xml version="1.0"?><items>';
 
     if ($data["day_entries"]) {
       foreach ($data["day_entries"] as $day_entry){
-        $project = htmlspecialchars($day_entry["project"]);
-        $task    = htmlspecialchars($day_entry["task"]);
-        $client  = htmlspecialchars($day_entry["client"]);
-        $notes   = htmlspecialchars($day_entry["notes"]);
-        $hours   = $day_entry["hours"];
-        $active  = $day_entry["timer_started_at"];
-        $id      = $day_entry["id"];
+        $project = htmlspecialchars(fetch_key($day_entry, "project"));
+        $task    = htmlspecialchars(fetch_key($day_entry, "task"));
+        $client  = htmlspecialchars(fetch_key($day_entry, "client"));
+        $notes   = htmlspecialchars(fetch_key($day_entry, "notes"));
+        $hours   = fetch_key($day_entry, "hours");
+        $active  = fetch_key($day_entry, "timer_started_at");
+        $id      = fetch_key($day_entry, "id");
 
         if ( stripos($project . $task . $client . $notes, $query) !== false ) {
       
