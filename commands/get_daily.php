@@ -15,14 +15,22 @@
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HEADER, 1);
   $response = curl_exec($ch);
-
-  // Then, after your curl_exec call:
+  
+  $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-  $header = substr($response, 0, $header_size);
-  $response_code = substr($header, 9, 3);
   $response = substr($response, $header_size);
 
-  if (curl_errno($ch)) {
+  // Then, after your curl_exec call:
+  // $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+  // $header = substr($response, 0, $header_size);
+  // $response_code = substr($header, 9, 3);
+  // $response = substr($response, $header_size);
+
+  // var_export(curl_errno($ch));
+  // var_export([$response_code]);
+  // die();
+
+  if (curl_errno($ch) !== 0) {
     print "Error: " . curl_error($ch);
     curl_close($ch);
   } elseif ($response_code == "200") {

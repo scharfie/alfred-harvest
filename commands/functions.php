@@ -1,6 +1,25 @@
 <?php
 require('auth.php');
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+function fetch_key($array, $key, $default=null) {
+  if (is_object($array)) {
+    if (property_exists($array, $key)) {
+      return $array->$key;
+    } else {
+      return $default;
+    }
+  }
+
+  if (array_key_exists($key, $array)) {
+    return $array[$key];
+  } else {
+    return $default;
+  }
+}
+
 function decimal_to_hours($decimal) {
   $parts = explode('.', $decimal . '');
   $parts[] = 0;
@@ -66,7 +85,7 @@ function start_timer($query) {
   curl_exec($ch); debug(json_encode(curl_getinfo($ch)));
   curl_close($ch);
 
-  $query = "Started —" . " " . $project;
+  $query = "Started —" . " " . $query; //$project;
   return $query;
 }
 

@@ -29,18 +29,21 @@
 
     $data = json_decode($data_raw, true);
 
-    $was_started = $data["timer_started_at"];
-    $project = $data["project"];
+    $was_started = fetch_key($data, "timer_started_at", false);
+    $project = fetch_key($data, "project");
+    $client = fetch_key($data, "client");
 
     if ( $was_started ) {
-      $query = "Started —" . " " . $project;
+      $query = "Started —" . " " . $client . "  " . $project;
     } else {
-      $query = "Stopped —" . " " . $project;
+      $query = "Stopped —" . " " . $client . "  " . $project;
     }
 
     echo $query;
 
   } else {
+    $id = null;
+    $name = null;
     $xml = "<?xml version=\"1.0\"?>\n<items>\n";
     $xml .= "<item valid=\"no\" uid=\"harvestnew-$id\" autocomplete=\"$name → \">\n";
     $xml .= "<title>HELLO</title>\n";
